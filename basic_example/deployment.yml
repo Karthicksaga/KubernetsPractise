@@ -1,0 +1,42 @@
+apiVersion: apps/v1 #deployment api version 
+kind: Deployment # is a kubernets Object /define the new deployment object 
+
+metadata: #define the name of the app # example
+# kubectl create deplyment first-app here first-app is the app name
+  name: first-app #name of the deployment
+  labels:
+    group: example
+
+spec: #specification of the whole pods 
+  replicas: 2 # how many times the pods replicate into the container
+  selector:  #
+    matchLabels:
+    #matchExpression -> is a complex selector we will see this later int the course
+      app: first-app
+      tier: backend
+
+    #matchExpression is more powerful way to selector
+
+    # matchExpressions: # we want the pods to select in this range 
+    #   - {key : app, operator: In, values: [second-app, first-app]}
+  template: # is related to the --image=<name of the image>
+    metadata: 
+      labels: 
+        app: first-app # label name is a form of key value pair the value is for upto us we can define the app name what ever we want example app_name : second-app or deploy: second-app is upto us. at the same time we add muliple label in the same labels
+        tier: backend
+    spec: # specification of the individual of the deployment pods  
+      containers: #here we add muliple container of the same pods 
+      - name: second-node #name is the container  first container name inside of the pod
+        image: karthicksaga/kube-first-app #pod first container image
+
+          #- name: second-container
+          #image: second-container -image
+        # ports:
+        # - containerPort: 8080
+        livenessProbe:  # how kubernets verify the container up and running
+          httpGet:
+            path : /
+            port: 8080
+          periodSeconds: 10
+          initialDelaySeconds: 5
+
