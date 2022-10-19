@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: story-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: story
+
+  template:
+    metadata:
+      labels:
+        app: story
+
+    spec:
+      containers:
+      - name: story
+        image: karthicksaga/volume_example
+# apiVersion: apps/v1 #deployment api version
+# kind : Deployment
+# metadata : 
+#   name : story-deployment 
+# spec:
+#   replicas : 1
+#   selector:
+#     matchLables:
+#       app: story 
+#       tier: story-deployment
+
+#   template :  
+#     metadata :
+#       labels:
+#         app: story 
+#         tier: story-deployment
+#     spec: 
+#       containers : 
+#       - name : story 
+#         image : karthicksaga/volume_example
