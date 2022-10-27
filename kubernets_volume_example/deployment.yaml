@@ -17,23 +17,14 @@ spec:
       containers:
       - name: story
         image: karthicksaga/volume_example
-# apiVersion: apps/v1 #deployment api version
-# kind : Deployment
-# metadata : 
-#   name : story-deployment 
-# spec:
-#   replicas : 1
-#   selector:
-#     matchLables:
-#       app: story 
-#       tier: story-deployment
-
-#   template :  
-#     metadata :
-#       labels:
-#         app: story 
-#         tier: story-deployment
-#     spec: 
-#       containers : 
-#       - name : story 
-#         image : karthicksaga/volume_example
+        volumeMounts: #where which the volume is mounted
+          - mountPath:  /app/stories #where the data stored in the volume in the container
+            name: story-volume #name of the volume in the container
+      # In each pod have multiple containers and Each containers has their own volumes. Each pods have muliple volumnes 
+      # - is represented as a list 
+      volumes:
+        - name: story-volume #name of the volumes
+           #create the dir whenever the pods created and the directory store the data whenever the pod up and running 
+                        #the data sarvive as long as pod is up and running    
+          persistentVolumeClaim: #access the claim to reach the pods
+            claimName: host-pvc

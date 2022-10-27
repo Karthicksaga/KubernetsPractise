@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: host-pv
+spec:
+  hostPath: 
+    path: /data
+    type: DirectoryOrCreate
+  capacity:  #how capacity needed to hold the each cluser
+    storage: 1Gi
+  volumeMode: Filesystem #two type of storage in development  Files System inside of the Cluser
+  # 1. Block Stroage and the file Storage 
+  accessModes:
+    - ReadWriteOnce
+    #There are three types of the accessMode 
+    #1. ReadWriteOnce - Multiple pods are access the volume in the same node
+    #2. ReadOnlyMany - Multiple pods with different node are access the volume ()
+    #3. ReadWriteMany - Read and write the data with multiple nodes 
+    
+  storageClassName: standard
+
